@@ -1,4 +1,4 @@
-package fr.maveilletechno.ws;
+package fr.maveilletechno.emailschecker.rest;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.maveilletechno.QuartzLauncher;
+import fr.maveilletechno.emailschecker.QuartzLauncher;
 
 public class MailJetAPI {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuartzLauncher.class);

@@ -1,4 +1,4 @@
-package fr.maveilletechno.job;
+package fr.maveilletechno.emailschecker.job;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.maveilletechno.QuartzLauncher;
-import fr.maveilletechno.ws.MailJetAPI;
+import fr.maveilletechno.emailschecker.QuartzLauncher;
+import fr.maveilletechno.emailschecker.rest.MailJetAPI;
 
 
 public class EmailStatusCheckerJob implements Job {

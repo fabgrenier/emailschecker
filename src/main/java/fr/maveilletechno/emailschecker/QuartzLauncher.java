@@ -1,4 +1,4 @@
-package fr.maveilletechno;
+package fr.maveilletechno.emailschecker;
 
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
@@ -12,7 +12,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.maveilletechno.job.EmailStatusCheckerJob;
+import fr.maveilletechno.emailschecker.job.EmailStatusCheckerJob;
 
 public class QuartzLauncher {
 	

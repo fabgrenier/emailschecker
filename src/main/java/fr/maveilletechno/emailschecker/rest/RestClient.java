@@ -1,4 +1,4 @@
-package fr.maveilletechno.ws;
+package fr.maveilletechno.emailschecker.rest;
 
 import java.io.IOException;
 import java.util.HashMap;
