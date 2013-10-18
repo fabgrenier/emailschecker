@@ -1,4 +1,5 @@
 package fr.maveilletechno;
+
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
@@ -56,7 +57,7 @@ public class QuartzLauncher {
 	    			   LOGGER.info(scheduler.getSchedulerName()+ " shutdown in progress..");
 	    			   scheduler.shutdown();
 	    		   } catch (SchedulerException e) {
-	    			   e.printStackTrace();
+	    			   LOGGER.error("Error on Quartz shutdown", e);
 	    		   }
 	    	   }
             });
