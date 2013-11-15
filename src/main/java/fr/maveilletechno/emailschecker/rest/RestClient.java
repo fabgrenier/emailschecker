@@ -13,6 +13,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.maveilletechno.emailschecker.entities.MailJetAccountStatus;
+
 public class RestClient {
 
 	private static final String API_URL = "http://api.mailjet.com/0.1/";
@@ -56,9 +60,14 @@ public class RestClient {
         //Now pull back the response object
         HttpEntity httpEntity = response.getEntity();
         String apiOutput = EntityUtils.toString(httpEntity);
-         
+        
         //Lets see what we got from API
         System.out.println(apiOutput);
+        
+        ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
+        MailJetAccountStatus emailStatus = mapper.readValue(apiOutput, MailJetAccountStatus.class);
+        
+        System.out.println(emailStatus);
 	}
 
 	public void closeConnection() {
