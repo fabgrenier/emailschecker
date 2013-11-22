@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.maveilletechno.emailschecker.entities.MailJetAccountStatus;
 
-public class RestClient {
+public class RestClientWithHttpClient {
 
 	private static final String API_URL = "http://api.mailjet.com/0.1/";
 	private static final String OUTPUT = "?output=json";
@@ -26,7 +26,7 @@ public class RestClient {
 	
 	private DefaultHttpClient httpClient;
 	
-	public RestClient(String username, String password, String[]... parameters) {
+	public RestClientWithHttpClient(String username, String password, String[]... parameters) {
 		// create default HTTP Client
         httpClient = new DefaultHttpClient();
         

@@ -15,7 +15,8 @@ public class MailJetAPI {
 
 	private static MailJetAPI mailJetAPI;
 	
-	private RestClient client;
+	private RestClientWithHttpClient client;
+	private RestClientWithJersey clientJersey;
 
 	public static MailJetAPI getInstance() throws IOException{
 		if(mailJetAPI == null){
@@ -28,8 +29,8 @@ public class MailJetAPI {
 		
 		Properties prop = getCredentialsFromPropertiesFile();
 		
-		client = new RestClient(prop.getProperty("login"), prop.getProperty("pass"));
-		
+//		client = new RestClientWithHttpClient(prop.getProperty("login"), prop.getProperty("pass"));
+		clientJersey = new RestClientWithJersey(prop.getProperty("login"), prop.getProperty("pass"));
 	}
 
 	private Properties getCredentialsFromPropertiesFile()
@@ -42,13 +43,14 @@ public class MailJetAPI {
 	}
 
 	public void messageList(){
-		try {
-			client.doRequest("messageList");
-		} catch (IOException e) {
+//		try {
+//			client.doRequest("messageList");
+			clientJersey.doRequest("messageList");
+/*		} catch (IOException e) {
 			LOGGER.error("Error on REST request", e);
 		} finally{
 			client.closeConnection();
-		}
+		}*/
 	}
 	
 }
