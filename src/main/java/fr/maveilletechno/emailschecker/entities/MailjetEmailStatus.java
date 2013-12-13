@@ -1,20 +1,40 @@
 package fr.maveilletechno.emailschecker.entities;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+
+/**
+ * https://fr.mailjet.com/docs/api/report/emailsent
+ * 
+ * @author fab_boulot
+ *
+ */
+@JsonAutoDetect
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MailjetEmailStatus {
 	
-	private Long id;
+	private Integer id;
 	private String subject;
-	private Long create_time;
 	private Long sendtime_start;
 	private Long sendtime_end;
 	private String from_email;
 	private String from_name;
 	private String status;
+	private String cnt_recipients;
+	private String email_id;
+	private String from_id;
+	private String to_email;
+	private Integer to_id;
 	
-	public Long getId() {
+	public enum statusValues {
+		queued, sent, opened, clicked, bounce, blocked, spam, unsub;
+	}
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getSubject() {
@@ -22,12 +42,6 @@ public class MailjetEmailStatus {
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-	public Long getCreate_time() {
-		return create_time;
-	}
-	public void setCreate_time(Long create_time) {
-		this.create_time = create_time;
 	}
 	public Long getSendtime_start() {
 		return sendtime_start;
@@ -59,47 +73,40 @@ public class MailjetEmailStatus {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((create_time == null) ? 0 : create_time.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-		return result;
+	public String getCnt_recipients() {
+		return cnt_recipients;
+	}
+	public void setCnt_recipients(String cnt_recipients) {
+		this.cnt_recipients = cnt_recipients;
+	}
+	public String getEmail_id() {
+		return email_id;
+	}
+	public void setEmail_id(String email_id) {
+		this.email_id = email_id;
+	}
+	public String getFrom_id() {
+		return from_id;
+	}
+	public void setFrom_id(String from_id) {
+		this.from_id = from_id;
+	}
+	public String getTo_email() {
+		return to_email;
+	}
+	public void setTo_email(String to_email) {
+		this.to_email = to_email;
+	}
+	public Integer getTo_id() {
+		return to_id;
+	}
+	public void setTo_id(Integer to_id) {
+		this.to_id = to_id;
 	}
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MailjetEmailStatus other = (MailjetEmailStatus) obj;
-		if (create_time == null) {
-			if (other.create_time != null)
-				return false;
-		} else if (!create_time.equals(other.create_time))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		if (subject == null) {
-			if (other.subject != null)
-				return false;
-		} else if (!subject.equals(other.subject))
-			return false;
-		return true;
+	public String toString() {
+		return "MailjetEmailStatus [id=" + id + ", subject=" + subject
+				+ ", status=" + status + ", to_email=" + to_email + "]";
 	}
 
 }

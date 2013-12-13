@@ -5,17 +5,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.maveilletechno.emailschecker.QuartzLauncher;
+import fr.maveilletechno.emailschecker.entities.MailJetEmailSentListStatus;
 
 public class MailJetAPI {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuartzLauncher.class);
 
 	private static MailJetAPI mailJetAPI;
 	
-	private RestClientWithHttpClient client;
 	private RestClientWithJersey clientJersey;
 
 	public static MailJetAPI getInstance() throws IOException{
@@ -26,10 +29,7 @@ public class MailJetAPI {
 	}
 	
 	private MailJetAPI() throws IOException {
-		
 		Properties prop = getCredentialsFromPropertiesFile();
-		
-//		client = new RestClientWithHttpClient(prop.getProperty("login"), prop.getProperty("pass"));
 		clientJersey = new RestClientWithJersey(prop.getProperty("login"), prop.getProperty("pass"));
 	}
 
@@ -42,15 +42,13 @@ public class MailJetAPI {
 		return prop;
 	}
 
-	public void messageList(){
-//		try {
-//			client.doRequest("messageList");
-			clientJersey.doRequest("messageList");
-/*		} catch (IOException e) {
-			LOGGER.error("Error on REST request", e);
-		} finally{
-			client.closeConnection();
-		}*/
+	public MailJetEmailSentListStatus reportEmailsent(){
+		WebTarget webService = clientJersey.doRequest("reportEmailsent");
+		MailJetEmailSentListStatus output = webService.request(MediaType.APPLICATION_JSON)
+				.get(MailJetEmailSentListStatus.class);
+
+		LOGGER.debug(output.toString());
+		return output;
 	}
 	
 }
