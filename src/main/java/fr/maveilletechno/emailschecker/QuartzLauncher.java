@@ -4,6 +4,7 @@ import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -12,7 +13,9 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.maveilletechno.emailschecker.entities.EmailToSend;
 import fr.maveilletechno.emailschecker.job.EmailStatusCheckerJob;
+import fr.maveilletechno.emailschecker.job.SendAnEmailJob;
 
 public class QuartzLauncher {
 	
@@ -21,6 +24,8 @@ public class QuartzLauncher {
 	private static final String EMAIL_STATUS_CHECKER_TRIGGER = "EmailStatusCheckerTrigger";
 	private static final String EMAIL_CHECKER_GROUP = "EmailCheckerGroup";
 	private static final String EMAIL_STATUS_CHECKER_JOB = "EmailStatusCheckerJob";
+	private static final String EMAIL_TO_SEND_JOB = "EmailToSendJob";
+	private static final String EMAIL_TO_SEND_TRIGGER = "EmailToSendTrigger";
 	
     public static void main(String[] args) {
         try {
@@ -49,6 +54,27 @@ public class QuartzLauncher {
             // Tell quartz to schedule the job using our trigger
             scheduler.scheduleJob(job, trigger);
             
+            /*
+             * Code d'exemple
+             */
+            JobDataMap emailjobDataMap = new JobDataMap();
+            emailjobDataMap.put("email", new EmailToSend("fab@youpi", "youpi", "exemple de youpi"));
+			JobDetail emailSample = newJob(SendAnEmailJob.class)
+                    .withIdentity(EMAIL_TO_SEND_JOB, EMAIL_CHECKER_GROUP)
+                    .setJobData(emailjobDataMap )
+                    .build();
+			
+            Trigger emailSampletrigger = newTrigger()
+                    .withIdentity(EMAIL_TO_SEND_TRIGGER, EMAIL_CHECKER_GROUP)
+                    .startNow()
+                    .build();
+            
+            // Tell quartz to schedule the job using our trigger
+            scheduler.scheduleJob(emailSample, emailSampletrigger);
+            /*
+             * Fin Code d'exemple
+             */
+            
             // Listen close asked by user
             Runtime.getRuntime().addShutdownHook(new Thread() {
 	    	   @Override
@@ -64,7 +90,7 @@ public class QuartzLauncher {
             
 
         } catch (SchedulerException se) {
-            se.printStackTrace();
+        	LOGGER.error("Error on Quartz", se);
         } 
     }
 }

@@ -15,7 +15,6 @@ import fr.maveilletechno.emailschecker.QuartzLauncher;
 import fr.maveilletechno.emailschecker.entities.MailjetEmailStatus;
 import fr.maveilletechno.emailschecker.rest.MailJetAPI;
 
-
 public class EmailStatusCheckerJob implements Job {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuartzLauncher.class);
@@ -34,7 +33,7 @@ public class EmailStatusCheckerJob implements Job {
 			for(MailjetEmailStatus email: emails){
 				if(email.getStatus().equals(MailjetEmailStatus.statusValues.queued.toString())){
 					LOGGER.debug("email to "+email.getTo_email()+" with subject "+email.getSubject()+" was not send so far");
-				}else {
+				} else {
 					if(status.get(email.getStatus()) != null){
 						status.put(email.getStatus(), Integer.valueOf((status.get(email.getStatus()) +1)));
 					} else {
